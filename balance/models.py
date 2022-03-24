@@ -45,7 +45,7 @@ class ProcessData :
 
 
 
-    def recupera_datos(self):
+    def recover_data(self):
         return self.haz_consulta("""
                         SELECT fecha, hora, concepto, es_ingreso, cantidad, id
                         FROM movimientos

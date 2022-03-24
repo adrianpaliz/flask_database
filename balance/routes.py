@@ -17,7 +17,7 @@ def home():
         return render_template("movemements.html", movements = data)
     except sqlite3.Error as error:
         flash("An error accurred in the database")
-        return render_template ( "movements.html", movements = [])
+        return render_template ("movements.html", movements = [])
         
 @app.route("/new", methods=['GET', 'POST'])
 def new():
