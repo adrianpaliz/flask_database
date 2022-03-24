@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+
+{% block title %}
+    New movement
+{% endblock %}
+
+[% block content %]
+    <h1>New movement</h1>
+    <form action="/new" method="post">
+        <div class="grid">
+            {{ form.date }}
+
+        </div>
+
+
+    </form>
