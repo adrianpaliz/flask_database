@@ -1,8 +1,8 @@
 import sqlite3
 
-class ProcessData :
-    def __init__(self, file=":memory:"):
-        self.origen_datos = file
+class ProcessData:
+    def __init__(self, file):
+        self.data_source = file
 
     def create_dictionary(self, cur):
         rows = cur.fetchall()
@@ -16,7 +16,7 @@ class ProcessData :
         for row in rows:
             record = {}
 
-            for key, value in zip(fields , row):
+            for key, value in zip(fields, row):
                 record[key] = value
 
             result.append(record)
@@ -31,11 +31,11 @@ class ProcessData :
             con.commit()
         return result
 
-    def haz_consulta(self, consulta, params=[]):
-        con = sqlite3.connect(self.origen_datos)
+    def make_a_query(self, query, params=[]):
+        con = sqlite3.connect(self.data_source)
         cur = con.cursor()
 
-        cur.execute(consulta, params)
+        cur.execute(query, params)
 
         result = self.results(cur, con)
 
@@ -43,36 +43,34 @@ class ProcessData :
 
         return result
 
-
-
     def recover_data(self):
-        return self.haz_consulta("""
-                        SELECT fecha, hora, concepto, es_ingreso, cantidad, id
-                        FROM movimientos
-                        ORDER BY fecha
+        return self.make_a_query("""
+                        SELECT day, time, concept, type, amount, id
+                        FROM movements
+                        ORDER BY day
                     """
         )
 
 
     def consulta_id(self, id):
-        return self.haz_consulta("""
-                        SELECT fecha, hora, concepto, es_ingreso, cantidad, id
-                          FROM movimientos
+        return self.make_a_query("""
+                        SELECT day, time, concept, type, amount, id
+                          FROM movements
                          WHERE id = ?      
                     """, (id,))
 
 
 
     def modifica_datos(self, params):
-        self.haz_consulta("""
-                    INSERT INTO movimientos (fecha, hora, concepto, es_ingreso, cantidad)
+        self.make_a_query("""
+                    INSERT INTO movements (day, time, concept, type, amount)
                                     values (?, ?, ?, ?, ?)
                     """, params)
 
 
     def update_datos(self, params):
-        self.haz_consulta("""
-                        UPDATE movimientos set fecha = ?, hora = ?, concepto = ?, es_ingreso = ?, cantidad = ?
+        self.make_a_query("""
+                        UPDATE movements set day = ?, time = ?, concept = ?, type = ?, amount = ?
                         WHERE id = ?
                         """, params)
 

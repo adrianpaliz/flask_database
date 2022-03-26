@@ -6,7 +6,8 @@ from balance.forms import MovementsForm
 from datetime import date, time
 
 
-data_manager = ProcessData()
+instantiated_database_path = app.config['DATABASE_PATH']
+data_manager = ProcessData(instantiated_database_path)
 
 
 @app.route("/")

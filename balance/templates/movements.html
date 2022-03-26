@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <p>Here goes the content</p>
-    <table>
+    <h1>Movements list</h1>
+    <table class="movements">
         <tr>
             <th>Date</th>
             <th>Time</th>
@@ -14,14 +14,18 @@
             <th>Type</th>
             <th>Amount</th>
         </tr>
+        {% for movement in movements %}
         <tr>
-            <th>{{ date }}</th>
-            <th>{{ time }}</th>
-            <th>{{ consept }}</th>
-            <th>{{ type }}</th>
-            <th>{{ amount }}</th>
+            <td>{{ movement.date }}</td>
+            <td>{{ movement.time }}</td>
+            <td>{{ movement.consept }}</td>
+            <td>{% if movement.type == 1 %} Income {% else %} expense {% endif %}</td>
+            <td>{{ movement.amount }}</td>
+            <td>
+                <a href="/edit/{{ movement.id }}">Edit</a>
+                <a href="/erase/{{ movement.id }}">Erase</a>
+            </td>
         </tr>
-
-
+        {% endfor %}
     </table>
 {% endblock %}
