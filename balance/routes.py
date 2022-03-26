@@ -6,29 +6,26 @@ from balance.forms import MovementsForm
 from datetime import date, time
 
 
-instantiated_database_path = app.config['DATABASE_PATH']
+instantiated_database_path = app.config["DATABASE_PATH"]
 data_manager = ProcessData(instantiated_database_path)
 
 
 @app.route("/")
 def home():
+    data = data_manager.recover_data()
+    return render_template("movements.html", movements=data)
 
-    try:
-        data = data_manager.recover_data()
-        return render_template("movemements.html", movements = data)
-    except sqlite3.Error as error:
-        flash("An error accurred in the database")
-        return render_template ("movements.html", movements = [])
-        
-@app.route("/new", methods=['GET', 'POST'])
+
+@app.route("/new", methods=["GET", "POST"])
 def new():
-    form = MovementsForm()
-    if request.method == 'GET':
-        return render_template("new.html", form=form)
+    instantiated_form = MovementsForm()
+    if request.method == "GET":
+        return render_template("new.html", jinja_form=instantiated_form)
     else:
-        if form.validate():
+        if instantiated_form.validate():
             pass
 
-@app.route("/edit/<int:id>", methods=['GET', 'POST'])
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
     pass

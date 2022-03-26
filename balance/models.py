@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class ProcessData:
     def __init__(self, file):
         self.data_source = file
@@ -7,7 +8,7 @@ class ProcessData:
     def create_dictionary(self, cur):
         rows = cur.fetchall()
 
-        fields  = []
+        fields = []
         for item in cur.description:
             fields.append(item[0])
 
@@ -20,10 +21,10 @@ class ProcessData:
                 record[key] = value
 
             result.append(record)
-        return result 
+        return result
 
     def results(self, cur, con):
- 
+
         if cur.description:
             result = self.create_dictionary(cur)
         else:
@@ -44,34 +45,38 @@ class ProcessData:
         return result
 
     def recover_data(self):
-        return self.make_a_query("""
-                        SELECT day, time, concept, type, amount, id
+        return self.make_a_query(
+            """
+                        SELECT day, hour, concept, income, amount, id
                         FROM movements
                         ORDER BY day
                     """
         )
 
-
-    def consulta_id(self, id):
-        return self.make_a_query("""
-                        SELECT day, time, concept, type, amount, id
+    def consult_id(self, id):
+        return self.make_a_query(
+            """
+                        SELECT day, hour, concept, income, amount, id
                           FROM movements
                          WHERE id = ?      
-                    """, (id,))
+                    """,
+            (id,),
+        )
 
-
-
-    def modifica_datos(self, params):
-        self.make_a_query("""
-                    INSERT INTO movements (day, time, concept, type, amount)
+    def edit_data(self, params):
+        self.make_a_query(
+            """
+                    INSERT INTO movements (day, hour, concept, income, amount)
                                     values (?, ?, ?, ?, ?)
-                    """, params)
+                    """,
+            params,
+        )
 
-
-    def update_datos(self, params):
-        self.make_a_query("""
-                        UPDATE movements set day = ?, time = ?, concept = ?, type = ?, amount = ?
+    def update_data(self, params):
+        self.make_a_query(
+            """
+                        UPDATE movements set day = ?, hour = ?, concept = ?, income = ?, amount = ?
                         WHERE id = ?
-                        """, params)
-
-
+                        """,
+            params,
+        )
