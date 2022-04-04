@@ -1,12 +1,12 @@
 {% extends "base.html"%}
 
 {% block title %}
-    New movement
+    Edit movement
 {% endblock %}
 
 {% block content %}
-    <h1>New movement</h1>
-        <form action="/new" method="post">
+    <h1>Edit movement</h1>
+        <form action="/edit/{{ jinja_id }}" method="post">
             {{ jinja_form.hidden_tag() }}
             <div class="grid">
                 {{ jinja_form.day.label() }}

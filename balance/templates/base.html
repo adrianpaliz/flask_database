@@ -3,25 +3,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/pico.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.css') }}">
     <title>Balance | {% block title %}{% endblock %}</title>
+
 </head>
 <body>
-
     <header>
-
         <div class="container">
             Income record
         </div>
-
     </header>
+        <nav class = "container">
+            <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/new">New</a></li>
+            </ul>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <section class="error container">
+            <ul>
+                {% for message in messages %}
+                    <li clase="error-msg">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}    
+    {% endwith%}
+
     <section class="container">
         {% block content %}{% endblock %}
 
     </section>
     <footer>
         <div class="container">
-            Lovingly made in Quito, Ecuador.
+            &#10084; Lovingly made in Quito, Ecuador.
         </div>
     </footer>
     

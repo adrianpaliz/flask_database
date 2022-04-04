@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+
+{% block title %}
+    Edit movement
+{% endblock %}
+
+{% block content %}
+    <h1>Edit movement</h1>
+        <form action="/edit/{{ jinja_id }}" method="post">
+            {{ jinja_form.hidden_tag() }}
+            <div class="grid">
+                {{ jinja_form.day.label() }}
+                {{ jinja_form.day.data }}                
+            </div>
+                
+            <div class="grid">
+                {{ jinja_form.hour.label() }}
+                {{ jinja_form.hour.data() }}
+            </div>
+                
+            <div class="grid">
+                {{ jinja_form.concept.label() }}
+                {{ jinja_form.concept.data }}
+            </div>
+                
+            <div class="grid">
+                {{ jinja_form.income.label() }}
+                {{ jinja_form.income.data }}
+            </div>                
+            <div class="grid">
+                {{ jinja_form.amount.label() }}
+                {{ jinja_form.amount(type="number", step="0.1") }}                
+            </div>
+                
+            <div class="container">
+                {{ jinja_form.submit() }}
+                <a href="/" role="button">Cancel</a>
+            </div>
+        </form>
+{% endblock %}

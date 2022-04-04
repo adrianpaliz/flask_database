@@ -1,8 +1,7 @@
 from flask import Flask
 
-app = Flask(__name__)
-app.config["DATABASE_PATH"] = "data/movements.db"
-app.config["SECRET_KEY"] = "here your key"
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_object("config")
 
 from balance import routes
 from balance import api_routes
